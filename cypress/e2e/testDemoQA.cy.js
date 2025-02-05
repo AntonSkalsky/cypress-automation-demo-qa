@@ -1,15 +1,20 @@
 describe('User Registration Tests', () => {
+  let testData;
+
   beforeEach(() => {
     cy.visit('https://demoqa.com/automation-practice-form');
+    cy.fixture('example').then((data) => {
+      testData = data;
+    });
   });
 
   it('Should register a user successfully', () => {
     // Filling in the basic information
-    cy.get('#firstName').type('John');
-    cy.get('#lastName').type('Doe');
-    cy.get('#userEmail').type('johndoe@example.com');
+    cy.get('#firstName').type(testData.firstName);
+    cy.get('#lastName').type(testData.lastName);
+    cy.get('#userEmail').type(testData.email);
     cy.get('[name="gender"][value="Male"]').check({ force: true });
-    cy.get('#userNumber').type('1234567890');
+    cy.get('#userNumber').type(testData.phoneNumber);
 
     // Choosing a date of birth
     cy.get('#dateOfBirthInput').click();
@@ -33,7 +38,7 @@ describe('User Registration Tests', () => {
     cy.get('#uploadPicture').selectFile('./cypress/downloads/ID.jpg', { force: true });
 
     // Filling in the address
-    cy.get('#currentAddress').type('Baker Str, 451');
+    cy.get('#currentAddress').type(testData.address);
 
     // Selecting a state and city
     cy.get('#state').click();
@@ -46,15 +51,15 @@ describe('User Registration Tests', () => {
     // Verification of successful registration
     cy.get('.modal-content').should('be.visible');
     cy.get('.modal-body')
-      .should('contain', 'John Doe')
-      .should('contain', 'johndoe@example.com')
+      .should('contain', testData.firstName + ' ' + testData.lastName)
+      .should('contain', testData.email)
       .should('contain', 'Male')
-      .should('contain', '1234567890')
+      .should('contain', testData.phoneNumber)
       .should('contain', '01 February,2003')
       .should('contain', 'Maths, Physics')
       .should('contain', 'Sports')
       .should('contain', 'ID.jpg')
-      .should('contain', 'Baker Str, 451')
+      .should('contain', testData.address)
       .should('contain', 'NCR Delhi');
   });
 
