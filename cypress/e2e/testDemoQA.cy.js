@@ -1,3 +1,4 @@
+import '@shelex/cypress-allure-plugin';
 describe('User Registration Tests', () => {
   let testData;
 
