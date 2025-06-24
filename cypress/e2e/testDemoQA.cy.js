@@ -35,7 +35,7 @@ describe('User Registration Tests', () => {
     cy.get('#hobbies-checkbox-1').check({ force: true });
     
     // Uploading a file
-    cy.get('#uploadPicture').selectFile('./cypress/downloads/ID.jpg', { force: true });
+    cy.get('#uploadPicture').selectFile('./cypress/fixtures/ID.jpg', { force: true });
 
     // Filling in the address
     cy.get('#currentAddress').type(testData.address);
